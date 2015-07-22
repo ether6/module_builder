@@ -1,0 +1,26 @@
+{
+  "name": "build_module",
+  "version": "1.0.0",
+  "description": "builds out the file/directory structure for an AngularJS module while adhearing to Intuit Care's naming conventions and style guide implementation",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3",
+    "yargs": "^3.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ether6/module_builder.git"
+  },
+  "author": "Grant Gallagher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ether6/module_builder/issues"
+  },
+  "homepage": "https://github.com/ether6/module_builder#readme"
+}
