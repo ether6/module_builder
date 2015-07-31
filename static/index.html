@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular Module Generator</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script>
+
+	$(function () {
+
+		$('#submit').on('click', function (e) {
+			e.preventDefault();
+			if($('select[name="component"]').val()) {
+				$.ajax({
+			        type: "POST",
+			        url: '/build',
+			        dataType: 'json',
+			        data: $('form').serialize(),
+					success: function (response) {
+						var errors = '';
+						var success = '';
+						$('#messages-errors').html('');
+						$('#messages-success').html('');
+						console.log(response)
+						for(var i = 0; i < response.messages.error.length; i++)
+							errors += '<div>' + response.messages.error[i] + '</div>';
+						for(var i = 0; i < response.messages.success.length; i++)
+							success += '<div>' + response.messages.success[i] + '</div>';
+						if(errors)
+							$('#messages-errors').show();
+						else
+							$('#messages-errors').hide();
+						if(success)
+							$('#messages-success').show();
+						else
+							$('#messages-success').hide();
+						$('#messages-errors').html(errors);
+						$('#messages-success').html(success);
+					}
+				});
+			} else {
+				console.log('here')
+				$('#messages-errors').html('<div>Compoent Selection is required</div>').show();
+			}
+
+		});
+
+	});
+
+	</script>
+</head>
+<body>
+	<div class="row clearfix" id="messages">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<br>
+			<div class="bg-success text-center" id="messages-success" style="padding: 15px; display: none"></div>
+			<div class="bg-danger text-center" id="messages-errors" style="padding: 15px; display: none"></div>
+			<br>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	<div class="panel panel-primary" style="width: 90%; margin: auto">
+		<div class="panel-heading">AngularJS Component Generator</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="wrapper col-sm-10">
+					<form class="form-inline">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="module">Module Name:</label>
+									<input class="form-control" type="text" name="module" value="myModuleName">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="component">Component(s):</label>
+									<select class="form-control" name="component" style="width: 200px; height: 150px" multiple required>
+										<option value="module">module</option>
+										<option value="factory">factory</option>
+										<option value="service">service</option>
+										<option value="controller">controller</option>
+										<option value="directive">directive</option>
+										<option value="template">template</option>
+										<option value="less">less</option>
+									</select>
+								</div>
+								<div>
+									<input class="form-control" type="checkbox" name="testfile"> Add unit test template
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="path">Path:</label>
+									<input class="form-control" type="text" name="path" value="../GitHub/front-end-dev/src/main/webapp/myModuleName" style="width:800px">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="editor">Open File(s):</label>
+									<input class="form-control" type="text" name="editor" value="sublime">
+									<input class="form-control" type="checkbox" name="open">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="finder">Open Finder:</label>
+									<input class="form-control" type="checkbox" name="finder">
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row clearfix">
+							<div class="col-sm-12 clearfix"><button id="submit" class="btn btn-primary">Add</button></div>
+						</div>
+					</form>
+				</div>
+				<div class="col-sm-1"></div>
+			</div>
+		</div>
+</body>
+</html>
